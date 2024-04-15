@@ -1,0 +1,74 @@
+---
+
+openapi: 3.0.3
+info:
+  title: Order Query API
+  version: 1.0.0
+  contact:
+    name: Raul Silva Araujo
+    email: raul.araujo.2000@hotmail.com
+
+servers:
+  - url: https://teste.com
+
+tags:
+  - name: aquarium
+    description: consult order data
+    externalDocs:
+      url: https://teste.com/doc/orders
+    
+paths:
+  /user:
+    post:
+      tags:
+        - aquarium
+      summary: user creation
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'  
+      responses:
+        '201':
+          description: user created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    get:
+      tags:
+        - aquarium
+      summary: return list users
+      parameters:
+        - in: query
+          name: full_name
+          schema:
+            type: string
+          example: Raul Silva Araujo
+          description: name user
+        - in: query
+          name: email
+          schema:
+            type: string
+          example: raul.araujo.2000@hotmail.com
+          description: email user
+      responses:
+        '200':
+          description: return list users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRequest'
+
+
+
+components:
+  schemas:
+    UserRequest:
+      $ref: 'schemas/user_request.yaml#/definitions/UserRequest'
+    
+    UserResponse:
+      $ref: 'schemas/user_response.yaml#/definitions/UserResponse'

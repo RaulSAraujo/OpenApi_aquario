@@ -1,0 +1,39 @@
+definitions:
+  UserResponse:
+    type: object
+    properties:
+      uuid:
+        type: string
+        example: 123e4567-e89b-12d3-a456-426614174000
+        description: Unique patient identifier
+      full_name:
+        type: string
+        example: Raul Silva Araujo
+        description: full name
+      cpf:
+        type: string
+        example: 123.456.789.00
+        description: user cpf
+      phone:
+        type: string
+        example: 016992161299
+        description: user phone
+      email:
+        type: string
+        example: raul.araujo.2000@hotmail.com
+        description: user email
+      address:
+        type: object
+        properties:
+          city:
+            type: string
+            example: Franca
+            description: user city
+          state:
+            type: string
+            example: SP
+            description: user state
+          zip:
+            type: string
+            example: 14400-000
+            description: user zip
