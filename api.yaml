@@ -1,5 +1,4 @@
 ---
-
 openapi: 3.0.3
 info:
   title: Order Query API
@@ -12,63 +11,351 @@ servers:
   - url: https://teste.com
 
 tags:
-  - name: aquarium
+  - name: Aquarium
     description: consult order data
     externalDocs:
-      url: https://teste.com/doc/orders
-    
+      url: https://teste.com/doc/aquarium
+
 paths:
   /user:
     post:
       tags:
-        - aquarium
-      summary: user creation
-      requestBody: 
+        - Aquarium
+      summary: Create a new user
+      description: This route allows the registration of a new user in the system. Provide user information in the body of the request.
+      requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'  
+              $ref: "#/components/schemas/UserRequest"
       responses:
-        '201':
+        "201":
           description: user created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error
+                    example: Invalid body
+                  body:
+                    type: object
+                    properties:
+                      full_name:
+                        type: string
+                        example: required
+                      email:
+                        type: string
+                        example: required
+                      password:
+                        type: string
+                        example: required
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error
+                    example: Internal server error
     get:
       tags:
-        - aquarium
-      summary: return list users
+        - Aquarium
+      summary: find all or one user
+      description: This route allows you to search for users in the system.
       parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+            format: uuid
         - in: query
           name: full_name
           schema:
             type: string
           example: Raul Silva Araujo
-          description: name user
         - in: query
           name: email
           schema:
             type: string
           example: raul.araujo.2000@hotmail.com
-          description: email user
       responses:
-        '200':
-          description: return list users
+        "200":
+          description: return array users
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserRequest'
-
-
-
+                  $ref: "#/components/schemas/UserResponse"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
+  /user/{id}:
+    put:
+      tags:
+        - Aquarium
+      summary: update users
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+      responses:
+        "200":
+          description: user update successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          description: Request error (invalid ID, incorrect data)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error (invalid ID, incorrect data)
+                    example: Request error (invalid ID, incorrect data)
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+                  body:
+                    type: object
+                    properties:
+                      full_name:
+                        type: string
+                        example: optional
+                      email:
+                        type: string
+                        example: optional
+                      password:
+                        type: string
+                        example: optional
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
+    delete:
+      tags:
+        - Aquarium
+      summary: delete users
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User deleted successfully
+        "400":
+          description: Request error, invalid ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error, invalid ID
+                    example: Request error, invalid ID
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
+  /login:
+    post:
+      tags:
+        - Aquarium
+      summary: User authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email address
+                password:
+                  type: string
+                  description: User password
+      responses:
+        "200":
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt:
+                    type: string
+                    format: jwt
+                  user:
+                    $ref: "#/components/schemas/UserResponse"
+        "401":
+          description: Unauthenticated user or invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Unauthenticated user or invalid credentials
+                    example: Unauthenticated user or invalid credentials
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error
+                    example: Internal server error
+  /aquarium:
+    post:
+      tags:
+        - Aquarium
+      summary: Create a new aquarium
+      responses:
+    get:
+      tags:
+        - Aquarium
+      responses:
+  /aquarium/{id}:
+    put:
+      tags:
+        - Aquarium
+      responses:
+    delete:
+      tags:
+        - Aquarium
+      responses:
+  
 components:
   schemas:
     UserRequest:
-      $ref: 'schemas/user_request.yaml#/definitions/UserRequest'
-    
+      $ref: "schemas/user_request.yaml#/definitions/UserRequest"
+
     UserResponse:
-      $ref: 'schemas/user_response.yaml#/definitions/UserResponse'
+      $ref: "schemas/user_response.yaml#/definitions/UserResponse"
