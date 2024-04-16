@@ -117,7 +117,7 @@ paths:
                     type: string
                     example: Internal server error
                     description: Internal server error
-  /user/{id}:
+  /user?id={id}:
     get:
       tags:
         - Aquarium
@@ -594,7 +594,7 @@ paths:
                     type: string
                     example: Internal server error
                     description: Internal server error
-  /aquarium/{id}:
+  /aquarium?id={id}:
     get:
       tags:
         - Aquarium
@@ -669,6 +669,53 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AquariumResponse"
+        "400":
+          description: Request error (invalid ID, incorrect data)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error (invalid ID, incorrect data)
+                    example: Request error (invalid ID, incorrect data)
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+                  body:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: optional
+                      format_aquarium:
+                        type: string
+                        example: optional
+                      material:
+                        type: string
+                        example: optional
+                      thickness:
+                        type: string
+                        example: optional
+                      capacity:
+                        type: string
+                        example: optional
+                      height:
+                        type: string
+                        example: optional
+                      width:
+                        type: string
+                        example: optional
+                      depth:
+                        type: string
+                        example: optional
+                      voltage:
+                        type: string
+                        example: optional
         "401":
           description: Unauthorized access
           content:
@@ -680,6 +727,16 @@ paths:
                     type: string
                     example: Unauthorized access
                     description: Unauthorized access
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Aquarium not found
         "500":
           description: Internal server error
           content:
@@ -867,11 +924,11 @@ paths:
                     type: string
                     example: Internal server error
                     description: Internal server error
-  /aquarium/{id}/accessory:
+  /aquarium/{aquarium_id}/accessories:
     get:
       tags:
         - Aquarium
-      summary: Aquarium Accessories
+      summary: find all accessories in the aquarium
       description: Accessories used in the aquarium
       parameters:
         - in: query
@@ -882,18 +939,144 @@ paths:
             format: uuid
       responses:
         "200":
-          description: return array Accessories in the aquarium
+          description: return array accessories in the aquarium
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/AcessoryRequest"
-  /aquarium/{id}/sensors:
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error (invalid ID)
+                    example: Request error (invalid ID)
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+                      name:
+                        type: string
+                        example: optional
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Aquarium not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
+  /aquarium/{aquarium_id}/accessories?id={id}:
+    get:
+      tags:
+        - Aquarium
+      summary: find one accessories in the aquarium
+      description: Accessories used in the aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: return array accessories in the aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AcessoryRequest"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error (invalid ID)
+                    example: Request error (invalid ID)
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+                      name:
+                        type: string
+                        example: optional
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Aquarium not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
+  /aquarium/{aquarium_id}/sensors:
     get:
       tags:
         - "Aquarium"
-      summary: Aquarium sensors
+      summary: find all sensors in the aquarium
       description: Sensors used in aquarium
       parameters:
         - in: query
@@ -911,11 +1094,33 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/SensorsRequest"
-  /aquarium/{id}/pets:
+  /aquarium/{aquarium_id}/sensors?id={id}:
+    get:
+      tags:
+        - "Aquarium"
+      summary: find one sensors in the aquarium
+      description: Sensors used in aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: return array Accessories in the aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SensorsRequest"
+  /aquarium/{aquarium_id}/pets:
     get:
       tags:
         - Aquarium
-      summary: Aquarium pets
+      summary: find all pets in the aquarium
       description: Pets living in the aquarium
       parameters:
         - in: query
@@ -933,7 +1138,29 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/PetRequest"
-        
+  /aquarium/{aquarium_id}/pets?id={id}:
+    get:
+      tags:
+        - Aquarium
+      summary: find one pet in the aquarium
+      description: Pets living in the aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: return array Accessories in the aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PetRequest"
+
 components:
   schemas:
     UserRequest:
@@ -948,7 +1175,7 @@ components:
 
     AcessoryRequest:
       $ref: "schemas/acessory_request.yaml#/definitions/AcessoryRequest"
-    
+
     SensorsRequest:
       $ref: "schemas/sensor_request.yaml#/definitions/SensorsRequest"
 
