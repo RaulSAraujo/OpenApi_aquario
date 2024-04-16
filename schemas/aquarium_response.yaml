@@ -1,0 +1,48 @@
+definitions:
+  AquariumResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      icon:
+        type: string
+      format_aquarium:
+        type: string
+        enum:
+          - rectangular
+          - curved
+          - hexagonal
+      material:
+        type: string
+        enum:
+          - glass
+          - acrylic
+          - plastic
+      thickness:
+        type: number
+        example: 4.0
+        description: Define measurements in mm
+      capacity:
+        type: number
+        example: 1.2
+        description: Define measurements in liters
+      height:
+        type: number
+        example: 35.2
+        description: Define measurements in cm
+      width:
+        type: number
+        example: 60.0
+        description: Define measurements in cm
+      depth:
+        type: number
+        example: 35.3
+        description: Define measurements in cm
+      voltage:
+        type: string
+        enum:
+          - 110v
+          - 220v

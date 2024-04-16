@@ -73,14 +73,9 @@ paths:
     get:
       tags:
         - Aquarium
-      summary: find all or one user
+      summary: find all user
       description: This route allows you to search for users in the system.
       parameters:
-        - in: query
-          name: id
-          schema:
-            type: string
-            format: uuid
         - in: query
           name: full_name
           schema:
@@ -123,10 +118,94 @@ paths:
                     example: Internal server error
                     description: Internal server error
   /user/{id}:
+    get:
+      tags:
+        - Aquarium
+      summary: find one user
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: full_name
+          schema:
+            type: string
+          example: Raul Silva Araujo
+        - in: query
+          name: email
+          schema:
+            type: string
+          example: raul.araujo.2000@hotmail.com
+      responses:
+        "200":
+          description: return array users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          description: Request error (invalid ID, incorrect data)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error (invalid ID)
+                    example: Request error (invalid ID)
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+                      full_name:
+                        type: string
+                        example: optional
+                      email:
+                        type: string
+                        example: optional
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
     put:
       tags:
         - Aquarium
       summary: update users
+      description: Updating user data with mandatory Id query
       parameters:
         - in: query
           name: id
@@ -212,6 +291,7 @@ paths:
       tags:
         - Aquarium
       summary: delete users
+      description: delete user with mandatory Id query
       parameters:
         - in: query
           name: id
@@ -284,6 +364,7 @@ paths:
       tags:
         - Aquarium
       summary: User authentication
+      description: Email and password authentication to obtain the token
       requestBody:
         required: true
         content:
@@ -337,25 +418,539 @@ paths:
       tags:
         - Aquarium
       summary: Create a new aquarium
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AquariumRequest"
       responses:
+        "201":
+          description: aquarium created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AquariumResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error
+                    example: Invalid body
+                  body:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: required
+                      icon:
+                        type: string
+                        example: required
+                      format_aquarium:
+                        type: string
+                        example: required (rectangular, curved, hexagonal)
+                        enum:
+                          - rectangular
+                          - curved
+                          - hexagonal
+                      material:
+                        type: string
+                        example: required (glass, acrylic, plastic)
+                        enum:
+                          - glass
+                          - acrylic
+                          - plastic
+                      Thickness:
+                        type: string
+                        example: required
+                        description: Define measurements in mm
+                      capacity:
+                        type: string
+                        example: required
+                        description: Define measurements in liters
+                      height:
+                        type: string
+                        example: required
+                        description: Define measurements in cm
+                      width:
+                        type: string
+                        example: required
+                        description: Define measurements in cm
+                      depth:
+                        type: string
+                        example: required
+                        description: Define measurements in cm
+                      voltage:
+                        type: string
+                        example: required (110V, 220V)
+                        enum:
+                          - 110V
+                          - 220V
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Internal server error
+                    example: Internal server error
     get:
       tags:
         - Aquarium
+      summary: find all aquarium
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          example: Aquarium_1
+        - in: query
+          name: format_aquarium
+          schema:
+            type: string
+            enum:
+              - rectangular
+              - curved
+              - hexagonal
+          example: rectangular
+        - in: query
+          name: material
+          schema:
+            type: string
+            enum:
+              - glass
+              - acrylic
+              - plastic
+          example: glass
+        - in: query
+          name: thickness
+          schema:
+            type: string
+          example: 4.0
+        - in: query
+          name: capacity
+          schema:
+            type: string
+          example: 1.2
+        - in: query
+          name: height
+          schema:
+            type: string
+          example: 35.2
+        - in: query
+          name: width
+          schema:
+            type: string
+          example: 60.0
+        - in: query
+          name: depth
+          schema:
+            type: string
+          example: 35.3
+        - in: query
+          name: voltage
+          schema:
+            type: string
+            enum:
+              - 110V
+              - 220V
+          example: 110V
       responses:
+        "200":
+          description: return array aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AquariumResponse"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
   /aquarium/{id}:
+    get:
+      tags:
+        - Aquarium
+      summary: find one aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: name
+          schema:
+            type: string
+          example: Aquarium_1
+        - in: query
+          name: format_aquarium
+          schema:
+            type: string
+            enum:
+              - rectangular
+              - curved
+              - hexagonal
+          example: rectangular
+        - in: query
+          name: material
+          schema:
+            type: string
+            enum:
+              - glass
+              - acrylic
+              - plastic
+          example: glass
+        - in: query
+          name: thickness
+          schema:
+            type: string
+          example: 4.0
+        - in: query
+          name: capacity
+          schema:
+            type: string
+          example: 1.2
+        - in: query
+          name: height
+          schema:
+            type: string
+          example: 35.2
+        - in: query
+          name: width
+          schema:
+            type: string
+          example: 60.0
+        - in: query
+          name: depth
+          schema:
+            type: string
+          example: 35.3
+        - in: query
+          name: voltage
+          schema:
+            type: string
+            enum:
+              - 110V
+              - 220V
+          example: 110V
+      responses:
+        "200":
+          description: return array aquarium
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AquariumResponse"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
     put:
       tags:
         - Aquarium
+      summary: update aquarium
+      description: Updating aquarium data with mandatory Id query
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AquariumRequest"
       responses:
+        "200":
+          description: user update successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AquariumResponse"
+        "400":
+          description: Request error (invalid ID, incorrect data)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error (invalid ID, incorrect data)
+                    example: Request error (invalid ID, incorrect data)
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+                  body:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: optional
+                      format_aquarium:
+                        type: string
+                        example: optional
+                      material:
+                        type: string
+                        example: optional
+                      thickness:
+                        type: string
+                        example: optional
+                      capacity:
+                        type: string
+                        example: optional
+                      height:
+                        type: string
+                        example: optional
+                      width:
+                        type: string
+                        example: optional
+                      depth:
+                        type: string
+                        example: optional
+                      voltage:
+                        type: string
+                        example: optional
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Aquarium not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
     delete:
       tags:
         - Aquarium
+      summary: delete aquarium
+      description: Delete aquarium data with mandatory Id query
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
-  
+        "204":
+          description: Aquarium deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Aquarium deleted successfully
+        "400":
+          description: Request error, invalid ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Request error, invalid ID
+                    example: Request error, invalid ID
+                  query:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: required
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized access
+                    description: Unauthorized access
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Aquarium not found
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+                    description: Internal server error
+  /aquarium/{id}/accessory:
+    get:
+      tags:
+        - Aquarium
+      summary: Aquarium Accessories
+      description: Accessories used in the aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: return array Accessories in the aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AcessoryRequest"
+  /aquarium/{id}/sensors:
+    get:
+      tags:
+        - "Aquarium"
+      summary: Aquarium sensors
+      description: Sensors used in aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: return array Accessories in the aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SensorsRequest"
+  /aquarium/{id}/pets:
+    get:
+      tags:
+        - Aquarium
+      summary: Aquarium pets
+      description: Pets living in the aquarium
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: return array Accessories in the aquarium
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PetRequest"
+        
 components:
   schemas:
     UserRequest:
       $ref: "schemas/user_request.yaml#/definitions/UserRequest"
-
     UserResponse:
       $ref: "schemas/user_response.yaml#/definitions/UserResponse"
+
+    AquariumRequest:
+      $ref: "schemas/aquarium_request.yaml#/definitions/AquariumRequest"
+    AquariumResponse:
+      $ref: "schemas/aquarium_response.yaml#/definitions/AquariumResponse"
+
+    AcessoryRequest:
+      $ref: "schemas/acessory_request.yaml#/definitions/AcessoryRequest"
+    
+    SensorsRequest:
+      $ref: "schemas/sensor_request.yaml#/definitions/SensorsRequest"
+
+    PetRequest:
+      $ref: "schemas/pet_request.yaml#/definitions/PetRequest"
