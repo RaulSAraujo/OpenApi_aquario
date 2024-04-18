@@ -1,0 +1,141 @@
+definitions:
+  AcessoryRequest:
+    type: object
+    properties:
+      name:
+        type: string
+        enum:
+          - auto feeder
+          - thermostat / heater
+          - filter
+          - bomb
+          - led light
+          - decorative
+      quantity:
+        type: number
+        example: 1
+  AcessoryResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+        enum:
+          - auto feeder
+          - thermostat / heater
+          - filter
+          - bomb
+          - led light
+          - decorative
+      quantity:
+        type: number
+        example: 1
+  AcessoryPostError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          full_name:
+            type: string
+            example: required
+          email:
+            type: string
+            example: required
+          password:
+            type: string
+            example: required
+  AcessoryGetError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          name:
+            type: string
+            example: optional
+          quantity:
+            type: string
+            example: optional
+  AcessoryGet2Error:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required
+          name:
+            type: string
+            example: optional
+          quantity:
+            type: string
+            example: optional
+  AcessoryPutError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            example: optional 
+          quantity:
+            type: string
+            example: optional
+  AcessoryDeleteError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required

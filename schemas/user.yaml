@@ -1,0 +1,102 @@
+definitions:
+  UserRequest:
+    type: object
+    properties:
+      full_name:
+        type: string
+        example: Raul Silva Araujo
+      email:
+        type: string
+        example: raul@hotmail.com
+      password:
+        type: string
+        format: password
+        example: raul1234
+  UserResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      full_name:
+        type: string
+        example: Raul Silva Araujo
+      email:
+        type: string
+        example: raul@hotmail.com
+  UserPostError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      body:
+        type: object
+        properties:
+          full_name:
+            type: string
+            example: required
+          email:
+            type: string
+            example: required
+          password:
+            type: string
+            example: required
+  UserGetError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          id:
+            type: string
+            example: required
+          full_name:
+            type: string
+            example: optional
+          email:
+            type: string
+            example: optional
+  UserPutError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          full_name:
+            type: string
+            example: optional
+          email:
+            type: string
+            example: optional
+          password:
+            type: string
+            example: optional
+  UserDeleteError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          id:
+            type: string
+            example: required

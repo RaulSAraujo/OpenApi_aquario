@@ -1,0 +1,247 @@
+definitions:
+  AquariumRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      icon:
+        type: string
+      format_aquarium:
+        type: string
+        enum:
+          - rectangular
+          - curved
+          - hexagonal
+      material:
+        type: string
+        enum:
+          - glass
+          - acrylic
+          - plastic
+      thickness:
+        type: number
+        example: 4.0
+        description: Define measurements in mm
+      capacity:
+        type: number
+        example: 1.2
+        description: Define measurements in liters
+      height:
+        type: number
+        example: 35.2
+        description: Define measurements in cm
+      width:
+        type: number
+        example: 60.0
+        description: Define measurements in cm
+      depth:
+        type: number
+        example: 35.3
+        description: Define measurements in cm
+      voltage:
+        type: string
+        enum:
+          - 110V
+          - 220V
+  AquariumResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      icon:
+        type: string
+      format_aquarium:
+        type: string
+        enum:
+          - rectangular
+          - curved
+          - hexagonal
+      material:
+        type: string
+        enum:
+          - glass
+          - acrylic
+          - plastic
+      thickness:
+        type: number
+        example: 4.0
+        description: Define measurements in mm
+      capacity:
+        type: number
+        example: 1.2
+        description: Define measurements in liters
+      height:
+        type: number
+        example: 35.2
+        description: Define measurements in cm
+      width:
+        type: number
+        example: 60.0
+        description: Define measurements in cm
+      depth:
+        type: number
+        example: 35.3
+        description: Define measurements in cm
+      voltage:
+        type: string
+        enum:
+          - 110v
+          - 220v
+  AquariumPostError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            example: required
+          icon:
+            type: string
+            example: required
+          format_aquarium:
+            type: string
+            example: required (rectangular, curved, hexagonal)
+            enum:
+              - rectangular
+              - curved
+              - hexagonal
+          material:
+            type: string
+            example: required (glass, acrylic, plastic)
+            enum:
+              - glass
+              - acrylic
+              - plastic
+          Thickness:
+            type: string
+            example: required
+            description: Define measurements in mm
+          capacity:
+            type: string
+            example: required
+            description: Define measurements in liters
+          height:
+            type: string
+            example: required
+            description: Define measurements in cm
+          width:
+            type: string
+            example: required
+            description: Define measurements in cm
+          depth:
+            type: string
+            example: required
+            description: Define measurements in cm
+          voltage:
+            type: string
+            example: required (110V, 220V)
+            enum:
+              - 110V
+              - 220V
+  AquariumGetError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            example: optional
+          format_aquarium:
+            type: string
+            example: optional
+          material:
+            type: string
+            example: optional
+          thickness:
+            type: string
+            example: optional
+          capacity:
+            type: string
+            example: optional
+          height:
+            type: string
+            example: optional
+          width:
+            type: string
+            example: optional
+          depth:
+            type: string
+            example: optional
+          voltage:
+            type: string
+            example: optional
+  AquariumPutError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            example: optional
+          format_aquarium:
+            type: string
+            example: optional
+          material:
+            type: string
+            example: optional
+          thickness:
+            type: string
+            example: optional
+          capacity:
+            type: string
+            example: optional
+          height:
+            type: string
+            example: optional
+          width:
+            type: string
+            example: optional
+          depth:
+            type: string
+            example: optional
+          voltage:
+            type: string
+            example: optional
+  AquariumDeleteError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          id:
+            type: string
+            example: required

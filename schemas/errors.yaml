@@ -1,0 +1,21 @@
+definitions:
+  "401":
+    type: object
+    properties:
+      error:
+        type: string
+        example: Unauthorized access
+        description: Unauthorized access
+  "404":
+    type: object
+    properties:
+      error:
+        type: string
+        example: not found
+  "500":
+    type: object
+    properties:
+      error:
+        type: string
+        example: Internal server error
+        description: Internal server error

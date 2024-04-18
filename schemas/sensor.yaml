@@ -1,0 +1,154 @@
+definitions:
+  SensorRequest:
+    type: object
+    properties:
+      name:
+        type: string
+        example: ice sensor
+      metric:
+        type: string
+        enum:
+          - temperature
+          - ph
+          - oxygen level
+          - water level
+          - luminosity
+      value:
+        type: number
+        example: 38
+  SensorResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+        example: ice sensor
+      metric:
+        type: string
+        enum:
+          - temperature
+          - ph
+          - oxygen level
+          - water level
+          - luminosity
+      value:
+        type: number
+        example: 38
+  SensorPostError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Invalid body
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            example: required
+          metric:
+            type: string
+            example: required
+          value:
+            type: string
+            example: required    
+  SensorGetError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          name:
+            type: string
+            example: optional
+          metric:
+            type: string
+            example: optional
+          value:
+            type: string
+            example: optional    
+  SensorGet2Error:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required
+          name:
+            type: string
+            example: optional
+          metric:
+            type: string
+            example: optional
+          value:
+            type: string
+            example: optional  
+  SensorPutError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            example: optional
+          metric:
+            type: string
+            example: optional
+          value:
+            type: string
+            example: optional  
+  SensorDeleteError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required

@@ -41,39 +41,17 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error
-                    example: Invalid body
-                  body:
-                    type: object
-                    properties:
-                      full_name:
-                        type: string
-                        example: required
-                      email:
-                        type: string
-                        example: required
-                      password:
-                        type: string
-                        example: required
+                $ref: "#/components/schemas/UserPostError"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Internal server error
-                    example: Internal server error
+                $ref: "#/components/schemas/500"
     get:
       tags:
         - Aquarium
-      summary: find all user
+      summary: Find all user
       description: This route allows you to search for users in the system.
       parameters:
         - in: query
@@ -88,7 +66,7 @@ paths:
           example: raul.araujo.2000@hotmail.com
       responses:
         "200":
-          description: return array users
+          description: Return array users
           content:
             application/json:
               schema:
@@ -100,28 +78,18 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
   /user?id={id}:
     get:
       tags:
         - Aquarium
-      summary: find one user
+      summary: Find one user
       parameters:
         - in: query
           name: id
@@ -141,70 +109,39 @@ paths:
           example: raul.araujo.2000@hotmail.com
       responses:
         "200":
-          description: return array users
+          description: Return array users
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
         "400":
-          description: Request error (invalid ID, incorrect data)
+          description: Request error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error (invalid ID)
-                    example: Request error (invalid ID)
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
-                      full_name:
-                        type: string
-                        example: optional
-                      email:
-                        type: string
-                        example: optional
+                $ref: "#/components/schemas/UserGetError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
-          description: User not found
+          description: Not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: User not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
     put:
       tags:
         - Aquarium
-      summary: update users
+      summary: Update users
       description: Updating user data with mandatory Id query
       parameters:
         - in: query
@@ -227,71 +164,34 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserResponse"
         "400":
-          description: Request error (invalid ID, incorrect data)
+          description: Request error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error (invalid ID, incorrect data)
-                    example: Request error (invalid ID, incorrect data)
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
-                  body:
-                    type: object
-                    properties:
-                      full_name:
-                        type: string
-                        example: optional
-                      email:
-                        type: string
-                        example: optional
-                      password:
-                        type: string
-                        example: optional
+                $ref: "#/components/schemas/UserPutError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
-          description: User not found
+          description: Not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: User not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
     delete:
       tags:
         - Aquarium
-      summary: delete users
-      description: delete user with mandatory Id query
+      summary: Delete users
+      description: Delete user with mandatory Id query
       parameters:
         - in: query
           name: id
@@ -315,50 +215,25 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error, invalid ID
-                    example: Request error, invalid ID
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
+                $ref: "#/components/schemas/UserDeleteError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
-          description: User not found
+          description: Not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: User not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
   /login:
     post:
       tags:
@@ -407,12 +282,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Internal server error
-                    example: Internal server error
+                $ref: "#/components/schemas/500"
   /aquarium:
     post:
       tags:
@@ -436,76 +306,17 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error
-                    example: Invalid body
-                  body:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: required
-                      icon:
-                        type: string
-                        example: required
-                      format_aquarium:
-                        type: string
-                        example: required (rectangular, curved, hexagonal)
-                        enum:
-                          - rectangular
-                          - curved
-                          - hexagonal
-                      material:
-                        type: string
-                        example: required (glass, acrylic, plastic)
-                        enum:
-                          - glass
-                          - acrylic
-                          - plastic
-                      Thickness:
-                        type: string
-                        example: required
-                        description: Define measurements in mm
-                      capacity:
-                        type: string
-                        example: required
-                        description: Define measurements in liters
-                      height:
-                        type: string
-                        example: required
-                        description: Define measurements in cm
-                      width:
-                        type: string
-                        example: required
-                        description: Define measurements in cm
-                      depth:
-                        type: string
-                        example: required
-                        description: Define measurements in cm
-                      voltage:
-                        type: string
-                        example: required (110V, 220V)
-                        enum:
-                          - 110V
-                          - 220V
+                $ref: "#/components/schemas/AquariumPostError"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Internal server error
-                    example: Internal server error
+                $ref: "#/components/schemas/500"
     get:
       tags:
         - Aquarium
-      summary: find all aquarium
+      summary: Find all aquarium
       parameters:
         - in: query
           name: name
@@ -565,7 +376,7 @@ paths:
           example: 110V
       responses:
         "200":
-          description: return array aquarium
+          description: Return array aquarium
           content:
             application/json:
               schema:
@@ -577,28 +388,18 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
   /aquarium?id={id}:
     get:
       tags:
         - Aquarium
-      summary: find one aquarium
+      summary: Find one aquarium
       parameters:
         - in: query
           name: id
@@ -664,94 +465,39 @@ paths:
           example: 110V
       responses:
         "200":
-          description: return array aquarium
+          description: Return array aquarium
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AquariumResponse"
         "400":
-          description: Request error (invalid ID, incorrect data)
+          description: Request error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error (invalid ID, incorrect data)
-                    example: Request error (invalid ID, incorrect data)
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
-                  body:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: optional
-                      format_aquarium:
-                        type: string
-                        example: optional
-                      material:
-                        type: string
-                        example: optional
-                      thickness:
-                        type: string
-                        example: optional
-                      capacity:
-                        type: string
-                        example: optional
-                      height:
-                        type: string
-                        example: optional
-                      width:
-                        type: string
-                        example: optional
-                      depth:
-                        type: string
-                        example: optional
-                      voltage:
-                        type: string
-                        example: optional
+                $ref: "#/components/schemas/AquariumGetError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
           description: Aquarium not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Aquarium not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
     put:
       tags:
         - Aquarium
-      summary: update aquarium
+      summary: Update aquarium
       description: Updating aquarium data with mandatory Id query
       parameters:
         - in: query
@@ -768,94 +514,39 @@ paths:
               $ref: "#/components/schemas/AquariumRequest"
       responses:
         "200":
-          description: user update successfully
+          description: User update successfully
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AquariumResponse"
         "400":
-          description: Request error (invalid ID, incorrect data)
+          description: Request error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error (invalid ID, incorrect data)
-                    example: Request error (invalid ID, incorrect data)
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
-                  body:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: optional
-                      format_aquarium:
-                        type: string
-                        example: optional
-                      material:
-                        type: string
-                        example: optional
-                      thickness:
-                        type: string
-                        example: optional
-                      capacity:
-                        type: string
-                        example: optional
-                      height:
-                        type: string
-                        example: optional
-                      width:
-                        type: string
-                        example: optional
-                      depth:
-                        type: string
-                        example: optional
-                      voltage:
-                        type: string
-                        example: optional
+                $ref: "#/components/schemas/AquariumPutError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
           description: Aquarium not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Aquarium not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
     delete:
       tags:
         - Aquarium
-      summary: delete aquarium
+      summary: Delete aquarium
       description: Delete aquarium data with mandatory Id query
       parameters:
         - in: query
@@ -880,66 +571,78 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error, invalid ID
-                    example: Request error, invalid ID
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
+                $ref: "#/components/schemas/AquariumDeleteError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
           description: Aquarium not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Aquarium not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
   /aquarium/{aquarium_id}/accessories:
+    post:
+      tags:
+        - Aquarium
+      summary: Create a new accessories in the aquarium
+      description: Create a new accessories in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcessoryRequest"
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcessoryResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcessoryPostError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
     get:
       tags:
         - Aquarium
-      summary: find all accessories in the aquarium
+      summary: Find all accessories in the aquarium
       description: Accessories used in the aquarium
       parameters:
         - in: query
-          name: id
+          name: aquarium_id
           required: true
           schema:
             type: string
             format: uuid
       responses:
         "200":
-          description: return array accessories in the aquarium
+          description: Return array accessories in the aquarium
           content:
             application/json:
               schema:
@@ -951,60 +654,38 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error (invalid ID)
-                    example: Request error (invalid ID)
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
-                      name:
-                        type: string
-                        example: optional
+                $ref: "#/components/schemas/AcessoryGetError"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
           description: Aquarium not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Aquarium not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Internal server error
-                    description: Internal server error
+                $ref: "#/components/schemas/500"
   /aquarium/{aquarium_id}/accessories?id={id}:
     get:
       tags:
         - Aquarium
-      summary: find one accessories in the aquarium
+      summary: Find one accessories in the aquarium
       description: Accessories used in the aquarium
       parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
         - in: query
           name: id
           required: true
@@ -1025,54 +706,171 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Request error (invalid ID)
-                    example: Request error (invalid ID)
-                  query:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: required
-                      name:
-                        type: string
-                        example: optional
+                $ref: "#/components/schemas/AcessoryGet2Error"
         "401":
           description: Unauthorized access
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Unauthorized access
-                    description: Unauthorized access
+                $ref: "#/components/schemas/401"
         "404":
           description: Aquarium not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Aquarium not found
+                $ref: "#/components/schemas/404"
         "500":
           description: Internal server error
           content:
             application/json:
               schema:
+                $ref: "#/components/schemas/500"
+    put:
+      tags:
+        - Aquarium
+      summary: Update accessory in the aquarium
+      description: Update accessory used in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcessoryRequest"
+      responses:
+        "200":
+          description: Accessory update successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcessoryResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcessoryPutError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    delete:
+      tags:
+        - Aquarium
+      summary: Delete acessory in the aquarium
+      description: Delete acessory in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Acessory deleted successfully
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  error:
+                  message:
                     type: string
-                    example: Internal server error
-                    description: Internal server error
+                    example: Acessory deleted successfully
+        "400":
+          description: Request error, invalid ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcessoryDeleteError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Acessory not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
   /aquarium/{aquarium_id}/sensors:
+    post:
+      tags:
+        - Aquarium
+      summary: Create a new sensor in the aquarium
+      description: Create a new sensor in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SensorRequest"
+      responses:
+        "201":
+          description: Sensor created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorPostError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
     get:
       tags:
         - "Aquarium"
@@ -1080,7 +878,7 @@ paths:
       description: Sensors used in aquarium
       parameters:
         - in: query
-          name: id
+          name: aquarium_id
           required: true
           schema:
             type: string
@@ -1093,7 +891,31 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/SensorsRequest"
+                  $ref: "#/components/schemas/SensorRequest"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorGetError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
   /aquarium/{aquarium_id}/sensors?id={id}:
     get:
       tags:
@@ -1102,6 +924,12 @@ paths:
       description: Sensors used in aquarium
       parameters:
         - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
           name: id
           required: true
           schema:
@@ -1115,8 +943,177 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/SensorsRequest"
+                  $ref: "#/components/schemas/SensorRequest"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorGet2Error"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    put:
+      tags:
+        - Aquarium
+      summary: Update sensor in the aquarium
+      description: Update sensor used in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SensorRequest"
+      responses:
+        "200":
+          description: user update successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorPutError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    delete:
+      tags:
+        - Aquarium
+      summary: Delete sensor in the aquarium
+      description: Delete sensor in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Sensor deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sensor deleted successfully
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorDeleteError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Acessory not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
   /aquarium/{aquarium_id}/pets:
+    post:
+      tags:
+        - Aquarium
+      summary: Create a new pet in the aquarium
+      description: Create a new pet in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetRequest"
+      responses:
+        "201":
+          description: Sensor created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetPostError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
     get:
       tags:
         - Aquarium
@@ -1138,6 +1135,30 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/PetRequest"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetGetError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
   /aquarium/{aquarium_id}/pets?id={id}:
     get:
       tags:
@@ -1145,6 +1166,12 @@ paths:
       summary: find one pet in the aquarium
       description: Pets living in the aquarium
       parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
         - in: query
           name: id
           required: true
@@ -1160,24 +1187,215 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/PetRequest"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetGet2Error"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Aquarium not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    put:
+      tags:
+        - Aquarium
+      summary: Update pet in the aquarium
+      description: Update pet used in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetRequest"
+      responses:
+        "200":
+          description: user update successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetResponse"
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetPutError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    delete:
+      tags:
+        - Aquarium
+      summary: Delete pet in the aquarium
+      description: Delete pet in the aquarium
+      parameters:
+        - in: query
+          name: aquarium_id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Pet deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Pet deleted successfully
+        "400":
+          description: Request error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetDeleteError"
+        "401":
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        "404":
+          description: Acessory not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
 
 components:
   schemas:
     UserRequest:
-      $ref: "schemas/user_request.yaml#/definitions/UserRequest"
+      $ref: "schemas/user.yaml#/definitions/UserRequest"
     UserResponse:
-      $ref: "schemas/user_response.yaml#/definitions/UserResponse"
+      $ref: "schemas/user.yaml#/definitions/UserResponse"
+    UserPostError:
+      $ref: "schemas/user.yaml#/definitions/UserPostError"
+    UserGetError:
+      $ref: "schemas/user.yaml#/definitions/UserGetError"
+    UserPutError:
+      $ref: "schemas/user.yaml#/definitions/UserPutError"
+    UserDeleteError:
+      $ref: "schemas/user.yaml#/definitions/UserDeleteError"
 
     AquariumRequest:
-      $ref: "schemas/aquarium_request.yaml#/definitions/AquariumRequest"
+      $ref: "schemas/aquarium.yaml#/definitions/AquariumRequest"
     AquariumResponse:
-      $ref: "schemas/aquarium_response.yaml#/definitions/AquariumResponse"
+      $ref: "schemas/aquarium.yaml#/definitions/AquariumResponse"
+    AquariumPostError:
+      $ref: "schemas/aquarium.yaml#/definitions/AquariumPostError"
+    AquariumGetError:
+      $ref: "schemas/aquarium.yaml#/definitions/AquariumGetError"
+    AquariumPutError:
+      $ref: "schemas/aquarium.yaml#/definitions/AquariumPutError"
+    AquariumDeleteError:
+      $ref: "schemas/aquarium.yaml#/definitions/AquariumDeleteError"
 
     AcessoryRequest:
-      $ref: "schemas/acessory_request.yaml#/definitions/AcessoryRequest"
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryRequest"
+    AcessoryResponse:
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryResponse"
+    AcessoryPostError:
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryPostError"
+    AcessoryGetError:
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryGetError"
+    AcessoryGet2Error:
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryGet2Error"
+    AcessoryPutError:
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryPutError"
+    AcessoryDeleteError:
+      $ref: "schemas/acessory.yaml#/definitions/AcessoryDeleteError"
 
-    SensorsRequest:
-      $ref: "schemas/sensor_request.yaml#/definitions/SensorsRequest"
+    SensorRequest:
+      $ref: "schemas/sensor.yaml#/definitions/SensorRequest"
+    SensorResponse:
+      $ref: "schemas/sensor.yaml#/definitions/SensorResponse"
+    SensorPostError:
+      $ref: "schemas/sensor.yaml#/definitions/SensorPostError"
+    SensorGetError:
+      $ref: "schemas/sensor.yaml#/definitions/SensorGetError"
+    SensorGet2Error:
+      $ref: "schemas/sensor.yaml#/definitions/SensorGet2Error"
+    SensorPutError:
+      $ref: "schemas/sensor.yaml#/definitions/SensorPutError"
+    SensorDeleteError:
+      $ref: "schemas/sensor.yaml#/definitions/SensorDeleteError"
 
     PetRequest:
-      $ref: "schemas/pet_request.yaml#/definitions/PetRequest"
+      $ref: "schemas/pet.yaml#/definitions/PetRequest"
+    PetResponse:
+      $ref: "schemas/pet.yaml#/definitions/PetResponse"
+    PetPostError:
+      $ref: "schemas/pet.yaml#/definitions/PetPostError"
+    PetGetError:
+      $ref: "schemas/pet.yaml#/definitions/PetGetError"
+    PetGet2Error:
+      $ref: "schemas/pet.yaml#/definitions/PetGet2Error"
+    PetPutError:
+      $ref: "schemas/pet.yaml#/definitions/PetPutError"
+    PetDeleteError:
+      $ref: "schemas/pet.yaml#/definitions/PetDeleteError"
+
+    "401":
+      $ref: "schemas/errors.yaml#/definitions/401"
+    "404":
+      $ref: "schemas/errors.yaml#/definitions/404"
+    "500":
+      $ref: "schemas/errors.yaml#/definitions/500"

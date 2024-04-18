@@ -1,0 +1,132 @@
+definitions:
+  PetRequest:
+    type: object
+    properties:
+      species:
+        type: string
+        enum:
+          - fish
+          - turtle
+          - snake
+      quantity:
+        type: number
+        example: 1
+  PetResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      species:
+        type: string
+        enum:
+          - fish
+          - turtle
+          - snake
+      quantity:
+        type: number
+        example: 1
+  PetPostError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Invalid body
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          species:
+            type: string
+            example: required
+          quantity:
+            type: string
+            example: required
+  PetGetError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          species:
+            type: string
+            example: optional
+          quantity:
+            type: string
+            example: optional
+  PetGet2Error:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required
+          species:
+            type: string
+            example: optional
+          quantity:
+            type: string
+            example: optional
+  PetPutError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required
+      body:
+        type: object
+        properties:
+          species:
+            type: string
+            example: optional
+          quantity:
+            type: string
+            example: optional
+  PetDeleteError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Request error
+        example: Request error
+      query:
+        type: object
+        properties:
+          aquarium_id:
+            type: string
+            example: required
+          id:
+            type: string
+            example: required  
